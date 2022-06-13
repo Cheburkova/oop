@@ -195,66 +195,65 @@ void square(int a, int b)
 
 Обратите внимание, что ключевое слово `const` указывают следом за списком параметров функции, а не перед именем функции:
 ```c++ 
-    class X {
-        int some_var;
-    public:
-        int fl() const; // постоянная функция-член
-    };
+class X {
+     int some_var;
+public:
+     int fl() const; // постоянная функция-член
+};
 ```
 Для примера рассмотрим следующую программу.
 ```c++ 
-    #include <iostream>
-    using namespace std;
-    class Demo {
-            int i;
-        public:
-            int geti () const {
-                return i; // здесь все правильно
-            }
-            void seti (int x) const {
-                i = x; // Ошибка!!!
-            }
-    };
+#include <iostream>
+using namespace std;
+class Demo {
+          int i;
+     public:
+          int geti () const {
+               return i; // здесь все правильно
+          }
+          void seti (int x) const {
+               i = x; // Ошибка!!!
+          }
+};
     
-    int main() {
-        Demo ob;
-        ob.seti(1900) ;
-        cout << ob.geti();
-        return 0;
-    }
+int main() {
+     Demo ob;
+     ob.seti(1900) ;
+     cout << ob.geti();
+     return 0;
+}
 ```
 Данная программа не будет компилироваться, поскольку функция-член `seti()` объявлена постоянной, что означает невозможность изменения вызывающего ее объекта. Таким образом, попытка изменения функцией переменной i ведет к ошибке. С другой стороны, поскольку функция `geti()` не меняет переменной i, она совершенно правильна.
 
 Возможна ситуация, когда вам понадобится, чтобы функция-член, оставаясь постоянной, тем не менее была способна изменить один или несколько членов класса. Это достигается заданием модифицируемых членов класса (ключевое слово `mutable`). **Модифицируемый член класса можно изменить с помощью постоянной функции-члена.**
 ```c++ 
-    #include <iostream>
-    using namespace std;
+#include <iostream>
+using namespace std;
     
-    class Demo {
-            mutable int i;
-            int j ;
-        public:
+class Demo {
+          mutable int i;
+          int j ;
+     public:
+          int geti() const {
+               return i; // здесь все правильно
+          }
         
-        int geti() const {
-        return i; // здесь все правильно
-        }
+          void seti(int x) const {
+               i = x; // теперь все правильно
+          }
         
-        void seti(int x) const {
-            i = x; // теперь все правильно
-        }
-        
-        void setj (int x) const {
-            j = x; // здесь прежняя ошибка
-        }
-    };
+          void setj (int x) const {
+               j = x; // здесь прежняя ошибка
+          }
+};
     
-    int main ()
-    {
-        Demo ob;
-        ob.seti(1900) ;
-        cout << ob.geti () ;
-        return 0;
-    }
+int main()
+{
+     Demo ob;
+     ob.seti(1900) ;
+     cout << ob.geti () ;
+     return 0;
+}
 ```
 Здесь переменная i задана модифицируемой, поэтому ее может изменить функция-член `seti()`. Тем не менее, поскольку переменная j по-прежнему остается не модифицируемой, постоянная функция-член `setj()` не может изменить ее значение.
 
