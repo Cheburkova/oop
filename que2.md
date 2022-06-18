@@ -608,7 +608,7 @@ class C {
    void operator delete(void *p);
 };
 
-void *C::operator new(size_t count) {
+void* C::operator new(size_t count) {
    std::cout << "new count=" << count << std::endl;
    void *p = std::malloc(count);   // Выделяем память
    if (!p) throw std::bad_alloc(); // Проверка и генерация исключения
