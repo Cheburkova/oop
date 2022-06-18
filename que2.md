@@ -562,7 +562,7 @@ return_type* operator new (size_t size) { }
 
 **Общая форма перегрузки оператора `delete` имеет следующий вид:**
 ```c++
-void operator delete (void *pointer) { }
+void operator delete (void* pointer) { }
 ```
 в которой `pointer` – указатель на область памяти, которая была предварительно выделена оператором `new`.
 
