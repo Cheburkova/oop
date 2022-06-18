@@ -604,18 +604,18 @@ public:
 ```c++
 class C {
    ...
-   void *operator new(size_t count);
+   void* operator new(size_t count);
    void operator delete(void *p);
 };
 
 void* C::operator new(size_t count) {
    std::cout << "new count=" << count << std::endl;
-   void *p = std::malloc(count);   // Выделяем память
+   void* p = std::malloc(count);   // Выделяем память
    if (!p) throw std::bad_alloc(); // Проверка и генерация исключения
    return p;                       // Возвращаем указатель
 }
 
-void C::operator delete(void *p) {
+void C::operator delete(void* p) {
    std::cout << "delete" << std::endl;
    std::free(p);                   // Освобождаем память
 }
